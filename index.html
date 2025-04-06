@@ -73,9 +73,44 @@
       color: #888;
       margin-top: 4px;
     }
+    .author {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+      font-style: italic;
+    }
     .mention {
       color: #1a73e8;
       font-weight: bold;
+    }
+    .respond-btn {
+      margin-top: 10px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .respond-form {
+      margin-top: 10px;
+    }
+    .respond-form textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      resize: vertical;
+    }
+    .respond-form button {
+      margin-top: 6px;
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -107,21 +142,27 @@
       const text = postText.value.trim();
       if (text === '') return;
 
-      const post = document.createElement('div');
-      post.className = 'post';
-      post.innerHTML = `
-        <div class="content">${parseMentions(text)}</div>
-        <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-      `;
-
+      const post = createPostElement(text);
       postFeed.prepend(post);
       postText.value = '';
     });
 
-    function parseMentions(text) {
-      return text.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
-    }
-  </script>
+    function createPostElement(text) {
+      const post = document.createElement('div');
+      post.className = 'post';
 
-</body>
-</html>
+      const content = document.createElement('div');
+      content.className = 'content';
+      content.innerHTML = parseMentions(text);
+
+      const author = document.createElement('div');
+      author.className = 'author';
+      author.textContent = 'trollemeiser97 posted this';
+
+      const time = document.createElement('div');
+      time.className = 'timestamp';
+      time.textContent = new Date().toLocaleTimeString();
+
+      const respondButton = document.createElement('button');
+      respondButton.className = 'respond-btn';
+      respondButton
