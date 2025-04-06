@@ -165,4 +165,53 @@
 
       const respondButton = document.createElement('button');
       respondButton.className = 'respond-btn';
-      respondButton
+      respondButton.textContent = 'Respond';
+      respondButton.addEventListener('click', () => showRespondForm(post));
+
+      post.appendChild(content);
+      post.appendChild(author);
+      post.appendChild(time);
+      post.appendChild(respondButton);
+
+      return post;
+    }
+
+    function parseMentions(text) {
+      return text.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+    }
+
+    function showRespondForm(post) {
+      // Avoid adding multiple forms
+      if (post.querySelector('.respond-form')) return;
+
+      const form = document.createElement('div');
+      form.className = 'respond-form';
+
+      const textarea = document.createElement('textarea');
+      textarea.rows = 2;
+      textarea.placeholder = 'Write a response...';
+
+      const button = document.createElement('button');
+      button.textContent = 'Post Response';
+      button.addEventListener('click', () => {
+        if (textarea.value.trim() !== '') {
+          const response = document.createElement('div');
+          response.className = 'post';
+          response.innerHTML = `
+            <div class="content">${parseMentions(textarea.value)}</div>
+            <div class="author">trollemeiser97 replied</div>
+            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+          `;
+          post.after(response);
+          form.remove();
+        }
+      });
+
+      form.appendChild(textarea);
+      form.appendChild(button);
+      post.appendChild(form);
+    }
+  </script>
+
+</body>
+</html>
