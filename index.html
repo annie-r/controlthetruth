@@ -220,6 +220,13 @@
       form.appendChild(button);
       post.appendChild(form);
     }
+
+    // Trigger popup when '0' key is pressed
+  window.addEventListener('keydown', function(e) {
+    if (e.key === '0') {
+      alert("🚨 Your account has been flagged by BAMF for attempting to input forbidden digits.");
+    }
+  });
   </script>
 
 </body>
