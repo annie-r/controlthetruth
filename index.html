@@ -119,7 +119,7 @@
   <div class="container">
     <div class="header">
       <div class="logo">🧠 Control the Truth</div>
-      <div class="welcome">Welcome, <strong>trollemeiser97</strong></div>
+      <div class="welcome">Welcome, <strong>trollmeister97</strong></div>
     </div>
 
     <div class="truth-prompt">What's your truth?</div>
@@ -157,11 +157,11 @@
 
       const author = document.createElement('div');
       author.className = 'author';
-      author.textContent = 'trollemeiser97 posted this';
+      author.textContent = 'trollmeister97 -' +new Date().toLocaleTimeString();
 
-      const time = document.createElement('div');
-      time.className = 'timestamp';
-      time.textContent = new Date().toLocaleTimeString();
+      //const time = document.createElement('div');
+      //time.className = 'timestamp';
+      //time.textContent = new Date().toLocaleTimeString();
 
       const respondButton = document.createElement('button');
       respondButton.className = 'respond-btn';
@@ -199,7 +199,7 @@
           response.className = 'post';
           response.innerHTML = `
             <div class="content">${parseMentions(textarea.value)}</div>
-            <div class="author">trollemeiser97 replied</div>
+            <div class="author">trollmeister97 replied</div>
             <div class="timestamp">${new Date().toLocaleTimeString()}</div>
           `;
           post.after(response);
