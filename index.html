@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Social Stream</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    #postForm {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #postText {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+    #submitPost {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #submitPost:hover {
+      background-color: #45a049;
+    }
+    .post {
+      background: #fafafa;
+      padding: 12px 16px;
+      margin-top: 16px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+    .post .timestamp {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+    .mention {
+      color: #1a73e8;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Social Stream</h2>
+    <form id="postForm">
+      <textarea id="postText" rows="3" placeholder="What's on your mind? You can tag people like @alex"></textarea>
+      <button type="submit" id="submitPost">Post</button>
+    </form>
+
+    <div id="postFeed"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('postForm');
+    const postText = document.getElementById('postText');
+    const postFeed = document.getElementById('postFeed');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const text = postText.value.trim();
+      if (text === '') return;
+
+      const post = document.createElement('div');
+      post.className = 'post';
+      post.innerHTML = `
+        <div class="content">${parseMentions(text)}</div>
+        <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+      `;
+
+      postFeed.prepend(post);
+      postText.value = '';
+    });
+
+    function parseMentions(text) {
+      return text.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+    }
+  </script>
+
+</body>
+</html>
